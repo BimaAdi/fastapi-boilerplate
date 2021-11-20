@@ -10,9 +10,9 @@ In Progress
 * [ ] PostgresSQL Integrations
     * [ ] Migration
     * [ ] Query
-* [ ] User Module
-    * [ ] CRUD Api
-    * [ ] Swagger
+* [x] User Module
+    * [x] CRUD Api
+    * [x] Swagger
 * [ ] Post Module
     * [ ] CRUD Api
     * [ ] Swagger
