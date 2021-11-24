@@ -1,0 +1,12 @@
+version: "3"
+services: 
+  postgres:
+    image: postgres:14-alpine
+    ports: 
+      - "{POSTGRESQL PORT}:5432"
+    environment: 
+      - POSTGRES_PASSWORD={POSTGRESQL PASSWORD}
+  redis:
+    image: redis:6-alpine
+    ports: 
+      - "{REDIS PORT}:6379"

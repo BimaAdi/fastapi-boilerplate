@@ -1,2 +1,5 @@
 env/
 **__pycache__**
+alembic.ini
+docker-compose.yml
+.env
