@@ -10,9 +10,9 @@ In Progress
 * [x] PostgresSQL Integrations
     * [x] Migration
     * [x] Query
-* [ ] User Module
+* [x] User Module
     * [x] CRUD Api
-    * [ ] Encrypt Password
+    * [x] Encrypt Password
     * [x] Swagger
 * [x] Role Module
     * [x] CRUD Api
@@ -22,8 +22,8 @@ In Progress
     * [ ] Swagger
 * [x] Role Module
     * [x] CRUD SQL
-* [ ] User Module
-    * [ ] CRUD SQL
+* [x] User Module
+    * [x] CRUD SQL
 * [ ] Post Module
     * [ ] CRUD SQL
 * [ ] Authentication and Authorization
@@ -36,7 +36,7 @@ In Progress
 * [ ] Unit Testing
     * [ ] Login & Logout (Auth Services)
     * [ ] User Services
-    * [ ] Role Services
+    * [x] Role Services
     * [ ] Post Services
 * [ ] Integration Testing
     * [ ] Auth Repository

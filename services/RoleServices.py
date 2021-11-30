@@ -18,7 +18,7 @@ class RoleServices():
             return InternalServerError(error=str(e))
         return Ok(data={
             'page': page,
-            'page_size': page_size,
+            'pageSize': page_size,
             'totalPage': num_page,
             'count': count,
             'data': [{'id': item.id, 'name': item.name } for item in roles]

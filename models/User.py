@@ -6,7 +6,7 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
+    username = Column(String, unique=True)
     password = Column(String)
     role_id = Column(Integer, ForeignKey('role.id'))
 

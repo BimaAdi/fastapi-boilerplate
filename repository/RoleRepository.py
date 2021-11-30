@@ -64,7 +64,6 @@ class RoleRepository():
             statement = select(Role).where(Role.id == id)
             role = session.execute(statement).scalar()
             if role == None:
-                print('role is none')
                 return None
             session.delete(role)
             session.commit()

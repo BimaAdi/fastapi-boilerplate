@@ -20,8 +20,8 @@ router = APIRouter(
     '200': { 'model': GetAllUserResponse},
     '500': { 'model': InternalServerError}
 })
-async def get_all_user():
-    users = await UserServices.get_all_user(page=1, pageSize=5)
+async def get_all_user(page:int, page_size:int):
+    users = await UserServices.get_all_user(page=page, page_size=page_size)
     return common_response(users)
 
 
@@ -54,6 +54,7 @@ async def update_user(id: int, request: UserUpdateRequest):
 
 @router.delete('/{id}', responses={
     '204': {'model': NoContent},
+    '400': {'model': BadRequest},
     '404': {'model': NotFound},
     '500': {'model': InternalServerError}
 })
