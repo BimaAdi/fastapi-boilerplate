@@ -5,16 +5,15 @@ from common.responses_services import (
 )
 from repository.RoleRepository import RoleRepository
 from serializers.RoleSerializers import CreateRoleRequest, UpdateRoleRequest
+from models.User import User
 
 class RoleServices():
 
     @staticmethod
-    async def get_all_roles(page: int, page_size: int)->Union[Ok, InternalServerError]:
+    async def get_all_roles(request_user:User, page: int, page_size: int)->Union[Ok, InternalServerError]:
         try:
             roles, count, num_page = RoleRepository.get_all_roles(page=page, page_size=page_size)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
             return InternalServerError(error=str(e))
         return Ok(data={
             'page': page,
@@ -25,12 +24,10 @@ class RoleServices():
         })
 
     @staticmethod
-    async def get_detail_role(id: int)->Union[Ok, NotFound, InternalServerError]:
+    async def get_detail_role(request_user:User, id: int)->Union[Ok, NotFound, InternalServerError]:
         try:
             role = RoleRepository.get_detail_role(id)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
             return InternalServerError(error=str(e))
         
         if role:
@@ -42,7 +39,7 @@ class RoleServices():
             return NotFound(message=f'role with id {id} not found')
 
     @staticmethod
-    async def create_role(data: CreateRoleRequest)->Union[Created, InternalServerError]:
+    async def create_role(request_user:User, data: CreateRoleRequest)->Union[Created, InternalServerError]:
         # Save data
         try:
             new_role = RoleRepository.create_role(
@@ -59,7 +56,7 @@ class RoleServices():
         })
 
     @staticmethod
-    async def update_role(id: int, data: UpdateRoleRequest)->Union[Ok, NotFound, InternalServerError]:
+    async def update_role(request_user:User, id: int, data: UpdateRoleRequest)->Union[Ok, NotFound, InternalServerError]:
         try:
             # update data
             updated_role = RoleRepository.update_role(
@@ -80,7 +77,7 @@ class RoleServices():
             return NotFound(message=f'role with id {id} not found')
 
     @staticmethod
-    async def delete_role(id: int)->Union[NoContent, NotFound, InternalServerError]:
+    async def delete_role(request_user:User, id: int)->Union[NoContent, NotFound, InternalServerError]:
         # Save data
         try:
             new_role = RoleRepository.delete_role(

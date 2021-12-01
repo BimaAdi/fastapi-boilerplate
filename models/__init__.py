@@ -2,17 +2,17 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from settings import (
+    POSTGRESQL_USER, POSTGRESQL_PASSWORD, POSTGRESQL_HOST, 
+    POSTGRESQL_DATABASE, POSTGRESQL_PORT
+)
 
 # Create sqlalchemy session
-if os.environ.get('ENVIRONTMENT') != 'prod':
-    from dotenv import load_dotenv
-    load_dotenv()
-
-username = os.environ.get('POSTGRESQL_USER')
-password = os.environ.get('POSTGRESQL_PASSWORD')
-host = os.environ.get('POSTGRESQL_HOST')
-port = os.environ.get('POSTGRESQL_PORT')
-database = os.environ.get('POSTGRESQL_DATABASE')
+username = POSTGRESQL_USER
+password = POSTGRESQL_PASSWORD
+host = POSTGRESQL_HOST
+port = POSTGRESQL_PORT
+database = POSTGRESQL_DATABASE
 engine = create_engine(f'postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}')
 # To use session for query, insert, update and delete see:
 # https://docs.sqlalchemy.org/en/14/orm/session_basics.html#using-a-sessionmaker

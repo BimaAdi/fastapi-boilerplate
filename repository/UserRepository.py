@@ -3,6 +3,7 @@ from typing import Union, Tuple, List
 from models import Session
 from models.User import User
 from sqlalchemy import select, func
+from sqlalchemy.orm import joinedload
 
 class UserRepository():
 
@@ -67,5 +68,19 @@ class UserRepository():
                 return None
             session.delete(user)
             session.commit()
+        return user
+    
+    @staticmethod
+    def get_detail_user_from_username(username:str)->Union[User, None]:
+        with Session() as session:
+            statement = select(User).where(User.username == username)
+            user = session.execute(statement).scalar()
+        return user
+    
+    @staticmethod
+    def get_detail_user_with_role(id:int)->Union[User, None]:
+        with Session() as session:
+            statement = select(User).options(joinedload(User.role)).where(User.id == id)
+            user = session.execute(statement).scalar()
         return user
     

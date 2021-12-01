@@ -26,8 +26,11 @@ In Progress
     * [x] CRUD SQL
 * [ ] Post Module
     * [ ] CRUD SQL
+* [ ] CLI App (using typer)
+    * [ ] Seed data
+    * [ ] Migration (Optional)
 * [ ] Authentication and Authorization
-    * [ ] JWT Integration
+    * [x] JWT Integration
     * [ ] Login Route (Auth Route)
     * [ ] Logout Route (Auth Route)
     * [ ] Authorization / Guard / Permissions
@@ -36,7 +39,7 @@ In Progress
 * [ ] Unit Testing
     * [ ] Login & Logout (Auth Services)
     * [ ] User Services
-    * [x] Role Services
+    * [ ] Role Services
     * [ ] Post Services
 * [ ] Integration Testing
     * [ ] Auth Repository

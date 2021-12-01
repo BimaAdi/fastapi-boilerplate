@@ -1,15 +1,19 @@
 from typing import Union
-import bcrypt
 from sqlalchemy.exc import IntegrityError
 from common.responses_services import Ok, Created, NoContent, BadRequest, NotFound, InternalServerError
+from common.security import generate_hash_password, validated_user_password
+from models.User import User
 from repository.UserRepository import UserRepository
 from serializers.UserSerializers import UserCreateRequest, UserUpdateRequest
 
 class UserServices():
 
     @staticmethod
-    async def get_all_user(page: int, page_size: int)->Ok:
-        users, num_users, num_page = UserRepository.get_all_user(page=page, page_size=page_size)
+    async def get_all_user(request_user:User, page: int, page_size: int)->Union[Ok, InternalServerError]:
+        try:
+            users, num_users, num_page = UserRepository.get_all_user(page=page, page_size=page_size)
+        except Exception as e:
+            return InternalServerError(error=str(e))
         return Ok(data={
             'page': page,
             'pageSize': page_size,
@@ -18,8 +22,12 @@ class UserServices():
         })
 
     @staticmethod
-    async def get_detail_user(id: int)->Union[Ok, NotFound, InternalServerError]:
-        user = UserRepository.get_detail_user(id)
+    async def get_detail_user(request_user:User, id: int)->Union[Ok, NotFound, InternalServerError]:
+        try:
+            user = UserRepository.get_detail_user(id)
+        except Exception as e:
+            return InternalServerError(error=str(e))
+        
         if user == None:
             return NotFound(message=f'user with id {id} not found')
         return Ok(data={
@@ -29,14 +37,13 @@ class UserServices():
         })
 
     @staticmethod
-    async def create_user(data: UserCreateRequest)->Union[Created, BadRequest, InternalServerError]:
+    async def create_user(request_user:User, data: UserCreateRequest)->Union[Created, BadRequest, InternalServerError]:
         # validation
         if data.password != data.confirm_password:
             return BadRequest(message="password and confirm password not match")
 
         # Hash Password using bcrypt
-        data.password = bcrypt.hashpw(str.encode(data.password), bcrypt.gensalt())
-        data.password = data.password.decode()
+        data.password = generate_hash_password(data.password)
 
         # Save data
         try:
@@ -57,7 +64,7 @@ class UserServices():
         })
 
     @staticmethod
-    async def update_user(id: int, data: UserUpdateRequest)->Union[Ok, BadRequest, NotFound, InternalServerError]:
+    async def update_user(request_user:User, id: int, data: UserUpdateRequest)->Union[Ok, BadRequest, NotFound, InternalServerError]:
         # validation
         ## check is password match
         if data.new_password != data.confirm_new_password:
@@ -68,13 +75,12 @@ class UserServices():
             return NotFound(message=f'user with id {id} not found')
 
         ## check is old password match
-        if not bcrypt.checkpw(data.old_password.encode(), updated_user.password.encode()):
+        if not validated_user_password(updated_user, data.old_password):
             return BadRequest(message="wrong old password")
 
         # update data
         ## Hash Password using bcrypt
-        data.new_password = bcrypt.hashpw(str.encode(data.new_password), bcrypt.gensalt())
-        data.new_password = data.new_password.decode()
+        data.new_password = generate_hash_password(data.new_password)
 
         ## update data on database
         try:
@@ -96,7 +102,7 @@ class UserServices():
         })
 
     @staticmethod
-    async def delete_user(id: int)->Union[NoContent, BadRequest, NotFound, InternalServerError]:
+    async def delete_user(request_user:User, id: int)->Union[NoContent, BadRequest, NotFound, InternalServerError]:
         try:
             user = UserRepository.delete_user(id)
         except IntegrityError as e:
