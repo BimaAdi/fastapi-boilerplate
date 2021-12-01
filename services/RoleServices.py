@@ -4,7 +4,7 @@ from common.responses_services import (
     NotFound, Created
 )
 from repository.RoleRepository import RoleRepository
-from serializers.RoleSerializers import CreateRoleRequest, UpdateRoleRequest
+from schemas.RoleSchemas import CreateRoleRequest, UpdateRoleRequest
 from models.User import User
 
 class RoleServices():

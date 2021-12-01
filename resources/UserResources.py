@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
-from common.responses_model import (
+from common.responses_schemas import (
     NotFound, NoContent,
     BadRequest, InternalServerError
 )
 from common.responses_services import common_response
 from common.security import oauth2_scheme, get_user_from_jwt_token
-from serializers.UserSerializers import (
+from schemas.UserSchemas import (
     GetAllUserResponse, GetUserResponse, 
     UserCreateRequest, UserUpdateRequest
 )
@@ -43,7 +43,7 @@ async def get_detail_user(id: int, token: str = Depends(oauth2_scheme)):
 })
 async def create_user(request: UserCreateRequest, token: str = Depends(oauth2_scheme)):
     request_user = get_user_from_jwt_token(token)
-    new_user = await UserServices.create_user(request_user=request_user, request=request)
+    new_user = await UserServices.create_user(request_user=request_user, data=request)
     return common_response(new_user)
 
 @router.put('/{id}', responses={
@@ -54,7 +54,7 @@ async def create_user(request: UserCreateRequest, token: str = Depends(oauth2_sc
 })
 async def update_user(id: int, request: UserUpdateRequest, token: str = Depends(oauth2_scheme)):
     request_user = get_user_from_jwt_token(token)
-    updated_user = await UserServices.update_user(request_user=request_user, id=id, request=request)
+    updated_user = await UserServices.update_user(request_user=request_user, id=id, data=request)
     return common_response(updated_user)
 
 @router.delete('/{id}', responses={

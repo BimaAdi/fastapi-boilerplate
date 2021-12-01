@@ -2,7 +2,7 @@ from os import name
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch
 from common.responses_services import Created, InternalServerError, NotFound, Ok
-from serializers.RoleSerializers import CreateRoleRequest
+from schemas.RoleSchemas import CreateRoleRequest
 from services.RoleServices import RoleServices
 from models.Role import Role
 

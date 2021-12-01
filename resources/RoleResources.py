@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
-from common.responses_model import (
+from common.responses_schemas import (
     NotFound, NoContent,
     BadRequest, InternalServerError
 )
 from common.responses_services import common_response
 from common.security import oauth2_scheme, get_user_from_jwt_token
-from serializers.RoleSerializers import (
+from schemas.RoleSchemas import (
     GetAllRoleResponse,
     GetRoleResponse,
     CreateRoleRequest,

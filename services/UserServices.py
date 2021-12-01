@@ -4,7 +4,7 @@ from common.responses_services import Ok, Created, NoContent, BadRequest, NotFou
 from common.security import generate_hash_password, validated_user_password
 from models.User import User
 from repository.UserRepository import UserRepository
-from serializers.UserSerializers import UserCreateRequest, UserUpdateRequest
+from schemas.UserSchemas import UserCreateRequest, UserUpdateRequest
 
 class UserServices():
 
