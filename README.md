@@ -27,7 +27,7 @@ In Progress
 * [ ] Post Module
     * [ ] CRUD SQL
 * [ ] CLI App (using typer)
-    * [ ] Seed data
+    * [x] Seed data
     * [ ] Migration (Optional)
 * [ ] Authentication and Authorization
     * [x] JWT Integration
