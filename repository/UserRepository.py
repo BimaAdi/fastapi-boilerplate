@@ -71,9 +71,9 @@ class UserRepository():
         return user
     
     @staticmethod
-    def get_detail_user_from_username(username:str)->Union[User, None]:
+    def get_detail_user_from_username_with_role(username:str)->Union[User, None]:
         with Session() as session:
-            statement = select(User).where(User.username == username)
+            statement = select(User).options(joinedload(User.role)).where(User.username == username)
             user = session.execute(statement).scalar()
         return user
     

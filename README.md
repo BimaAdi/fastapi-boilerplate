@@ -31,13 +31,13 @@ In Progress
     * [ ] Migration (Optional)
 * [ ] Authentication and Authorization
     * [x] JWT Integration
-    * [ ] Login Route (Auth Route)
-    * [ ] Logout Route (Auth Route)
+    * [x] Login Route (Auth Route)
+    * [x] Logout Route (Auth Route)
     * [ ] Authorization / Guard / Permissions
         * [ ] User Authorization
         * [ ] Post Authorization
 * [ ] Unit Testing
-    * [ ] Login & Logout (Auth Services)
+    * [x] Login & Logout (Auth Services)
     * [ ] User Services
     * [ ] Role Services
     * [ ] Post Services

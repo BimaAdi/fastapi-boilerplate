@@ -20,7 +20,7 @@ class TestRoleServices(IsolatedAsyncioTestCase):
         )
 
         # when
-        output = await RoleServices.get_all_roles(page=page, page_size=page_size)
+        output = await RoleServices.get_all_roles(request_user=None, page=page, page_size=page_size)
         
         # expect
         """
@@ -77,7 +77,7 @@ class TestRoleServices(IsolatedAsyncioTestCase):
         mockRoleRepository.get_all_roles.side_effect = Exception('Database error')
 
         # When
-        output = await RoleServices.get_all_roles(page=page, page_size=page_size)
+        output = await RoleServices.get_all_roles(request_user=None, page=page, page_size=page_size)
 
         # Expect
         self.assertIsInstance(output, InternalServerError, msg=f'when error occuured should return class of common.responses_services.InternalServerError')
@@ -93,7 +93,7 @@ class TestRoleServices(IsolatedAsyncioTestCase):
         mockRoleRepository.get_detail_role.side_effect = get_detail_role
 
         # When
-        output = await RoleServices.get_detail_role(id=input_id)
+        output = await RoleServices.get_detail_role(request_user=None, id=input_id)
 
         # Expect
         self.assertIsInstance(output, Ok, msg=f'output should be class of common.responses_services.Ok')
@@ -107,7 +107,7 @@ class TestRoleServices(IsolatedAsyncioTestCase):
         mockRoleRepository.get_detail_role.return_value = None
 
         # When
-        output = await RoleServices.get_detail_role(id=input_id)
+        output = await RoleServices.get_detail_role(request_user=None, id=input_id)
 
         # Expect
         self.assertIsInstance(output, NotFound, msg=f'output should be class of common.responses_services.NotFound')
@@ -119,7 +119,7 @@ class TestRoleServices(IsolatedAsyncioTestCase):
         mockRoleRepository.get_detail_role.side_effect = Exception('database Error')
 
         # When
-        output = await RoleServices.get_detail_role(id=input_id)
+        output = await RoleServices.get_detail_role(request_user=None, id=input_id)
 
         # Expect
         self.assertIsInstance(output, InternalServerError, msg=f'output should be class of common.responses_services.InternalServerError')
@@ -134,7 +134,7 @@ class TestRoleServices(IsolatedAsyncioTestCase):
         mockRoleRepository.create_role.side_effect = create_role
 
         # When
-        output = await RoleServices.create_role(data=input_request)
+        output = await RoleServices.create_role(request_user=None,data=input_request)
 
         # Expect
         self.assertIsInstance(output, Created, msg=f'output should be class of common.responses_services.Ok')

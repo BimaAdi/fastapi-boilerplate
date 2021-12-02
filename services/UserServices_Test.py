@@ -24,7 +24,7 @@ class TestUserServices(IsolatedAsyncioTestCase):
         )
 
         # When
-        output = await UserServices.get_all_user(page=page, page_size=page_size)
+        output = await UserServices.get_all_user(request_user=None, page=page, page_size=page_size)
 
         # Expect
         """
@@ -65,7 +65,7 @@ class TestUserServices(IsolatedAsyncioTestCase):
         mockUserRepository.get_all_user.side_effect = Exception('Database error')
 
         # When
-        output = await UserServices.get_all_user(page=page, page_size=page_size)
+        output = await UserServices.get_all_user(request_user=None, page=page, page_size=page_size)
 
         # Expect
         self.assertIsInstance(output, InternalServerError, msg=f'when error occuured should return class of common.responses_services.InternalServerError')
@@ -82,7 +82,7 @@ class TestUserServices(IsolatedAsyncioTestCase):
         mockUserRepository.get_detail_user.side_effect = get_detail_user
 
         # When
-        output = await UserServices.get_detail_user(id=input_id)
+        output = await UserServices.get_detail_user(request_user=None, id=input_id)
 
         # Expect
         self.assertIsInstance(output, Ok, msg=f'output should be class of common.responses_services.Ok')
@@ -97,7 +97,7 @@ class TestUserServices(IsolatedAsyncioTestCase):
         mockUserRepository.get_detail_user.return_value = None
 
         # When
-        output = await UserServices.get_detail_user(id=input_id)
+        output = await UserServices.get_detail_user(request_user=None, id=input_id)
 
         # Expect
         self.assertIsInstance(output, NotFound, msg=f'output should be class of common.responses_services.NotFound')
@@ -109,7 +109,7 @@ class TestUserServices(IsolatedAsyncioTestCase):
         mockUserRepository.get_detail_user.side_effect = Exception('database Error')
 
         # When
-        output = await UserServices.get_detail_user(id=input_id)
+        output = await UserServices.get_detail_user(request_user=None, id=input_id)
 
         # Expect
         self.assertIsInstance(output, InternalServerError, msg=f'output should be class of common.responses_services.InternalServerError')
